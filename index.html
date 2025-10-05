@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <!-- =========================================================================
+       Firm Hand OU — Koduleht (mööbli- ja köögimööbli tootmine)
+       Keel: Eesti
+       Disain: helge, õrn varj, suured ümardused (nagu referentsfotol)
+       Nõuded: 
+         • Min 350 rida HTML+CSS+JS
+         • Vorm peidetud kuni "Võtke ühendust" nupp – avatakse MODAL-aknas
+         • Ilma telefoninumbriteta ja ilma rahale viitavate fraasideta
+         • Kontakt ainult e-posti kaudu
+         • Aadress: Soosaare tn 3, 61508 Elva
+         • E-post: ivar@firmhand.org
+     ========================================================================= -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Firm Hand OU — Mööbli- ja köögimööbli tootmine Elvas</title>
+  <meta name="description" content="Firm Hand OU — kodu- ja institutsioonimööbli ning köögimööbli tootmine. Disain, mõõdistus, tootmine, paigaldus. Narva mnt 149-10, 51008 Tartu. E-post: ivar@firmhand.org">
+  <meta name="color-scheme" content="light only">
+  <style>
+    /* =========================
+       Palett (ref-foto järgi)
+       ========================= */
+    :root{
+      --bg: #e9e7e3;              /* soe hallikas-beež taust (canvas) */
+      --paper: #ffffff;           /* valge pind / kaardid */
+      --ink: #1c1c1c;            /* põhitekst */
+      --muted: #737373;          /* summutatud tekst */
+      --edge: #f1f0ed;           /* heledam paneelitaust */
+      --stroke: rgba(0,0,0,.08); /* õrn piirjoon */
+      --accent: #171717;         /* tume nupp */
+      --accent-2: #ece9e4;       /* hele pill */
+      --chip: #f5f4f1;           /* väikesed märgised */
+      --shadow: 0 10px 30px rgba(0,0,0,.07);
+      --radius-hero: 32px;       /* suured ümardused nagu pildil */
+      --radius: 18px;            /* standardne ümardus */
+      --pill: 999px;             /* ümar-pill nuppude jaoks */
+      --max: 1100px;             /* sisu laius */
+    }
+
+    /* ========== Põhistiilid ========== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    /* ========== Päis / nav ========== */
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(233,231,227,.65);
+      backdrop-filter:saturate(120%) blur(8px);border-bottom:1px solid var(--stroke);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;padding:14px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px
+    }
+    .mark{
+      width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,#181818,#404040);
+      color:#fff;display:grid;place-items:center;box-shadow:var(--shadow)
+    }
+    nav ul{
+      list-style:none;margin:0;padding:6px;background:var(--accent-2);border-radius:var(--pill);
+      display:flex;gap:6px;flex-wrap:wrap;border:1px solid var(--stroke)
+    }
+    nav a{
+      display:block;padding:10px 16px;border-radius:var(--pill);font-weight:700;color:#2b2b2b
+    }
+    nav a:hover{background:#fff;box-shadow:var(--shadow)}
+    .cta{
+      border:0;border-radius:var(--pill);padding:10px 16px;font-weight:800;cursor:pointer;
+      background:var(--accent);color:#fff;box-shadow:var(--shadow)
+    }
+    .cta:hover{opacity:.9}
+
+    /* ========== Hero (suured ümardused) ========== */
+    .hero{
+      background:var(--paper);
+      margin:26px auto 0;
+      border-radius:var(--radius-hero);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .hero-inner{
+      padding:46px 0 42px;position:relative;z-index:1
+    }
+    .hero-top{
+      display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px
+    }
+    .avatar{
+      width:56px;height:56px;border-radius:50%;overflow:hidden;border:3px solid var(--edge);
+      box-shadow:var(--shadow)
+    }
+    .hero h1{
+      text-align:center;font-size:42px;line-height:1.15;margin:8px 0 14px;
+      letter-spacing:-.01em
+    }
+    .sub{
+      text-align:center;color:var(--muted);max-width:760px;margin:0 auto 18px
+    }
+    .hero-cta{
+      display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px
+    }
+    .pill{
+      background:#111;color:#fff;border:0;border-radius:var(--pill);padding:10px 16px;font-weight:800;cursor:pointer
+    }
+    .pill.alt{
+      background:var(--accent-2);color:#222;border:1px solid var(--stroke)
+    }
+    .pill:hover{opacity:.9}
+
+    /* ========== Klientide riba (kaardid ümarate nurkadega) ========== */
+    .band{
+      background:var(--edge);border-top-left-radius:var(--radius-hero);border-top-right-radius:var(--radius-hero);
+      border-bottom-left-radius:var(--radius-hero);border-bottom-right-radius:var(--radius-hero);
+      padding:30px 0;border:1px solid var(--stroke);margin:22px 24px 0
+    }
+    .logos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;align-items:center}
+    .logo{
+      background:var(--paper);border:1px solid var(--stroke);border-radius:12px;padding:16px;display:grid;place-items:center;color:#4b4b4b;
+      font-weight:800;letter-spacing:.06em;box-shadow:var(--shadow)
+    }
+    @media (max-width:980px){.logos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+    /* ========== Peasektsioon pealkirjaga (collaborate…) ========== */
+    .section{padding:90px 0}
+    .section h2{
+      text-align:center;margin:0 0 8px;font-size:28px;letter-spacing:-.01em
+    }
+    .section .lead{color:var(--muted);text-align:center;max-width:800px;margin:0 auto}
+
+    /* ========== Teenused ikoonidega ========== */
+    .grid{display:grid;gap:20px}
+    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:980px){.grid-4{grid-template-columns:1fr 1fr}}
+    @media (max-width:680px){.grid-4,.grid-2{grid-template-columns:1fr}}
+
+    .card{
+      background:var(--paper);border:1px solid var(--stroke);border-radius:18px;padding:22px;box-shadow:var(--shadow)
+    }
+    .icon{
+      width:42px;height:42px;border-radius:10px;background:var(--chip);display:grid;place-items:center;margin:0 auto 8px
+    }
+    .card h3{text-align:center;margin:8px 0 6px}
+    .card p{text-align:center;color:var(--muted);margin:0}
+
+    /* ========== Suur CTA plokk (Tell me about your next project…) ========== */
+    .cta-panel{
+      background:var(--paper);border:1px solid var(--stroke);border-radius:var(--radius-hero);box-shadow:var(--shadow);
+      padding:44px 22px;margin-top:34px
+    }
+    .cta-panel h3{text-align:center;font-size:28px;margin:6px 0 8px}
+    .cta-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+    .chip{background:var(--chip);border:1px solid var(--stroke);border-radius:var(--pill);padding:8px 14px}
+
+    /* ========== Jalus ========== */
+    footer{padding:30px 0 60px}
+    .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#696969}
+    .divider{height:1px;background:var(--stroke);margin:16px 0}
+
+    /* ========== MODAL (vorm) ========== */
+    .modal{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60;
+      background:rgba(0,0,0,.35);backdrop-filter:blur(2px)
+    }
+    .modal.show{display:flex}
+    .modal-card{
+      width:min(720px,92vw);background:var(--paper);border-radius:22px;box-shadow:var(--shadow);border:1px solid var(--stroke);
+      overflow:hidden
+    }
+    .modal-head{
+      padding:16px 18px;background:var(--edge);display:flex;align-items:center;justify-content:space-between
+    }
+    .modal-head h4{margin:0;font-size:18px}
+    .close{
+      border:0;background:#000;color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:800
+    }
+    .modal-body{padding:18px}
+
+    /* Vorm ise (ilma telefonita) */
+    form{display:grid;gap:12px}
+    label{font-weight:700;font-size:14px}
+    input,textarea,select{
+      width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--stroke);background:#fff;outline:none
+    }
+    input:focus,textarea:focus,select:focus{border-color:#333}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:640px){.row{grid-template-columns:1fr}}
+
+    .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:var(--pill);padding:12px 16px;font-weight:800;cursor:pointer}
+    .btn.dark{background:#111;color:#fff}
+    .btn.light{background:var(--accent-2);border:1px solid var(--stroke)}
+    .note{font-size:12px;color:#666}
+
+    /* Teavitus (toast) */
+    .toast{
+      position:fixed;bottom:18px;right:18px;background:#111;color:#fff;padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);
+      opacity:0;transform:translateY(10px);pointer-events:none;transition:all .28s ease;z-index:80
+    }
+    .toast.show{opacity:1;transform:translateY(0);pointer-events:auto}
+  </style>
+</head>
+<body>
+  <!-- ============================ NAVIGAATSIOON ============================ -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#algus" aria-label="Avaleht">
+        <span class="mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M4 12a8 8 0 1 1 8 8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 14l5-5 2 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>Firm Hand OU</span>
+      </a>
+      <nav aria-label="Sektsioonid">
+        <ul>
+          <li><a href="#koostoo">Koostöö</a></li>
+          <li><a href="#teenused">Teenused</a></li>
+          <li><a href="#materjalid">Materjalid</a></li>
+          <li><a href="#kestlik">Kestlikkus</a></li>
+          <li><a href="#kontakt">Kontaktid</a></li>
+        </ul>
+      </nav>
+      <button class="cta" id="openModalTop">Võtke ühendust</button>
+    </div>
+  </header>
+
+  <!-- ============================ HERO ============================ -->
+  <main id="algus" class="container hero" role="main" aria-label="Kodulehe avaleht">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div class="avatar">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop" alt="Tootmise projektijuht">
+        </div>
+      </div>
+      <h1>Loome kestvaid <em>tooteid</em>, <em>brände</em> ja<br> <em>kogemusi</em> — päris puit ja täpne teostus.</h1>
+      <p class="sub">
+        Firm Hand OU on Elvas tegutsev lepinguline tootja — disainime, valmistame ja paigaldame
+        kodu- ja institutsioonimööblit ning köögimööblit. Meie protsess algab mõõdistusest ning
+        lõpeb puhta paigaldusega. Kõik sammud on dokumenteeritud ja jälgitavad.
+      </p>
+      <div class="hero-cta">
+        <button class="pill" id="openModalHero">Võtke ühendust</button>
+        <a class="pill alt" href="#teenused" aria-label="Vaata teenuseid">Teenused</a>
+      </div>
+    </div>
+
+    <!-- Logo-bänd (kuue plokiga) -->
+    <div class="band container">
+      <div class="logos">
+        <div class="logo">NATIONAL</div>
+        <div class="logo">MATTERED</div>
+        <div class="logo">COCO</div>
+        <div class="logo">ADOBE</div>
+        <div class="logo">SUBWAY</div>
+        <div class="logo">CODE*</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================ Koostöö mõte ============================ -->
+  <section id="koostoo" class="section">
+    <div class="container">
+      <h2>Teeme koostööd arhitektide, brändide ja agentuuridega</h2>
+      <p class="lead">
+        Meie roll on tõlkida visuaalne idee tootmiskeelde. Anname varakult tagasiside
+        konstruktsioonile, kinnitustele ja katetele; loome lõikefailid ning tootmispaketid; 
+        valmistame seeriad, mis püsivad ka intensiivses kasutuses (koolid, tervishoid, avalik ruum).
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================ Teenused (4 kaarti) ============================ -->
+  <section id="teenused" class="container section">
+    <div class="grid grid-4">
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M12 5v14" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Mõõdistus & projekteerimine</h3>
+        <p>Laser-mõõdistus, 3D paigutus ja lõikefailid. Arvestame seina- ja põrandamoonutusi, et liitekohad jääksid nähtamatuks.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16v10H4z" stroke="#111" stroke-width="2"/><path d="M8 7v10M16 7v10" stroke="#111" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>Kappide ja köökide tootmine</h3>
+        <p>Melamiin, spoon, täispuit; BLUM / Hettich furnituur. Servad liimime niiskuskindla PUR-tehnoloogiaga.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="8" stroke="#111" stroke-width="2"/><path d="M7 12h10M12 7v10" stroke="#111" stroke-width="2"/>
+          </svg>
+        </div>
+        <h3>Institutsioonimööbel</h3>
+        <p>Koolid, meditsiiniasutused ja bürood: kulumiskindlad pinnad, modulaarne ehitus, hooldusmugavus ja varuosade tagamine.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M6 17l12-10M6 7l12 10" stroke="#111" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Paigaldus & järelhooldus</h3>
+        <p>Selge ajakava, puhas tööplats ja järelreguleerimine. Anname üle lihtsa hooldusjuhendi ja kinnituste kontrollnimekirja.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================ Materjalid & viimistlus ============================ -->
+  <section id="materjalid" class="section" style="background:var(--edge)">
+    <div class="container">
+      <h2>Materjalid, mida igapäevaselt kasutame</h2>
+      <p class="lead">Valime lahenduse ruumi koormuse järgi. Alltoodud valik on laovarudest alati saadaval.</p>
+
+      <div class="grid grid-2" style="margin-top:18px">
+        <article class="card">
+          <h3>Spoon, laminaat, täispuit</h3>
+          <p>Populaarsemad: tamm, saar, pähkel; laminaat matt/ultramatt. Viimistluseks õlivaha või veebaasil lakk, mille kulumisklass sobib ka avalikule ruumile.</p>
+          <p>Servades kasutame 1 mm ABS-i või puiduspooni; nurkade radius on vaikimisi 1,5 mm, erijuhtudel teeme 0,5 mm mikrofaasi.</p>
+        </article>
+        <article class="card">
+          <h3>Tööpinnad ja fassaadid</h3>
+          <p>Tööpinnad HPL-laminaat või täispuit (40 mm). Fassaadid shaker, sile või raamprofiil; soft-close mehhanismid standardis.</p>
+          <p>Niisketes ruumides rakendame niiskustõkkeid ja täidame kriitilised servad PUR-liimiga, et vältida paisumist.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ Kestlikkus / tootmise põhimõtted ============================ -->
+  <section id="kestlik" class="section">
+    <div class="container">
+      <h2>Kestlik tootmine on vaikimisi</h2>
+      <p class="lead">Planeerime lõike optimaalselt, kogume jäägid uuesti kasutamiseks ja eelistame tarnijaid, kes pakuvad jälgitava päritoluga toorainet.</p>
+
+      <div class="grid grid-4" style="margin-top:18px">
+        <article class="card">
+          <h3>Targa lõike muster</h3>
+          <p>Kasutame optimeerimist, mis vähendab materjalikulu; jäägid märgistame uuesti kasutamiseks prototüüpides ja väikestes partiides.</p>
+        </article>
+        <article class="card">
+          <h3>Lokaalne tarnimine</h3>
+          <p>Eelistame Eesti ja lähiregiooni tarnijaid, et tarneaega lühendada ja süsinikujalajälge vähendada.</p>
+        </article>
+        <article class="card">
+          <h3>Vähem kemikaale</h3>
+          <p>Viimistlused on madala VOC-sisaldusega. Tolmu püüdmine ja töökoha ventilatsioon on projektide lahutamatu osa.</p>
+        </article>
+        <article class="card">
+          <h3>Remontitavus</h3>
+          <p>Disainime sõlmed nii, et kuluvad detailid on vahetatavad. Lisame varuosade nimekirja ja kinnituskaardi.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ Galerii (pehme, light) ============================ -->
+ <section class="section" style="background:var(--edge)">
+  <div class="container">
+    <h2>Valik tehtud töid</h2>
+    <p class="lead">Köögid, sisseehitatud kapid ja institutsioonimööbel. Fotod on illustratiivsed, detailid kinnitame projektis.</p>
+    
+    <div class="grid grid-4" style="margin-top:18px">
+      <div class="card">
+        <img src="main1.jpg" alt="Köögimööbel — tamm + valge laminaat">
+      </div>
+      <div class="card">
+        <img src="main2.jpg" alt="Sisseehitatud garderoob">
+      </div>
+      <div class="card">
+        <img src="main3.jpg" alt="Institutsioonimööbli näide">
+      </div>
+      <div class="card">
+        <img src="main4.jpg" alt="Köögisaar täispuidust">
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Уравниваем размеры всех изображений */
+  .grid.grid-4 .card img {
+    width: 100%;
+    height: 300px;              /* фиксированная высота для единообразия */
+    object-fit: cover;          /* равномерное обрезание без искажений */
+    border-radius: 14px;        /* немного мягче, чем у карточки */
+    display: block;
+  }
+
+  .grid.grid-4 .card {
+    padding: 10px;
+    background: var(--paper);
+    border: 1px solid var(--stroke);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+</style>
+
+  <!-- ============================ Suur CTA paneel (vorm MODAL-is) ============================ -->
+  <section class="container section">
+    <div class="cta-panel">
+      <div class="chip" style="margin:0 auto 8px;width:max-content">Koostöö algab kirjeldusest</div>
+      <h3>Räägi meile järgmisest projektist</h3>
+      <div class="cta-actions">
+        <button class="btn dark" id="openModalBottom">Võtke ühendust</button>
+        <a class="btn light" href="#kontakt">Kontaktid</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ Kontaktid (aadress + e-post) ============================ -->
+  <section id="kontakt" class="section">
+    <div class="container">
+      <h2>Kontaktid</h2>
+      <div class="grid grid-2" style="margin-top:10px">
+        <div class="card">
+          <h3>Aadress</h3>
+          <p>Narva mnt 149-10, 51008, Tartu</p>
+          <p class="note">Töökoda ja ladu; külastus kokkuleppel.</p>
+        </div>
+        <div class="card">
+          <h3>E-post</h3>
+          <p><a href="mailto:ivar@firmhand.org">ivar@firmhand.org</a></p>
+          <p class="note">Kirjuta lühikirjeldus mõõtudest, materjalist ja soovitud ajakavast – vastame esialgse vaatega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ Jalus ============================ -->
+  <footer class="container" aria-label="Jalus">
+    <div class="divider"></div>
+    <div class="footer-row">
+      <p><strong>Firm Hand OU </strong> — kodu- ja institutsioonimööbli ning köögimööbli tootmine. Elva, Eesti.</p>
+      <p><a href="#teenused">Teenused</a> / <a href="#materjalid">Materjalid</a> / <a href="#kestlik">Kestlikkus</a></p>
+    </div>
+    <div class="footer-row">
+      <p class="note">© 2025 Firm Hand OU. Kõik õigused kaitstud.</p>
+      <p class="note">Disain ja teostus: sisemeeskond.</p>
+    </div>
+  </footer>
+
+  <!-- ============================ MODAL VORM (peidetud kuni nupu klõpsuni) ============================ -->
+  <div class="modal" id="contactModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h4 id="modalTitle">Alustame vestlust</h4>
+        <button class="close" id="closeModal" aria-label="Sulge vorm">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Vorm ilma telefonita; fookus ettevõttele sobiv -->
+        <form id="contactForm">
+          <div class="row">
+            <div>
+              <label for="name">Nimi</label>
+              <input id="name" name="name" type="text" placeholder="Ees- ja perekonnanimi" required>
+            </div>
+            <div>
+              <label for="email">E-post</label>
+              <input id="email" name="email" type="email" placeholder="nimi@organisatsioon.ee" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="org">Organisatsioon</label>
+              <input id="org" name="org" type="text" placeholder="Ettevõtte või projekti nimi">
+            </div>
+            <div>
+              <label for="topic">Teema</label>
+              <select id="topic" name="topic">
+                <option value="kook">Köögimööbel</option>
+                <option value="kapp">Sisseehitatud kapid</option>
+                <option value="institutsioon">Institutsioonimööbel</option>
+                <option value="muu">Muu (täpsusta allpool)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="message">Lühikirjeldus</label>
+            <textarea id="message" name="message" rows="6" placeholder="Mõõdud, materjalieelistused, paigalduskoht, ajakava…" required></textarea>
+          </div>
+
+          <label class="note" for="consent">
+            <input id="consent" type="checkbox" required>
+            Nõustun, et minu andmeid kasutatakse üksnes ühenduse võtmiseks ja esialgse vaate saatmiseks.
+          </label>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn dark" type="submit">Saada päring</button>
+            <button class="btn light" type="button" id="closeBottom">Loobu</button>
+          </div>
+
+          <p class="note" style="margin-top:8px">
+            Abifraasid: “Vajan köögi fassaade tammespooniga”, “Soovin garderoobikappi seina-nišši”, “Avaliku ruumi pingid HPL-kattega”.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ Toast (eduteade) ============================ -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true">Aitäh! Teie sõnum on teele pandud.</div>
+
+  <!-- ============================ Skriptid ============================ -->
+  <script>
+    // ---- Sujuv kerimine nav-lingiga
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href').slice(1);
+        var el = document.getElementById(id);
+        if(el){
+          e.preventDefault();
+          el.scrollIntoView({behavior:'smooth'});
+        }
+      });
+    });
+
+    // ---- Modal avamine/sulgemine
+    const modal = document.getElementById('contactModal');
+    const openButtons = [document.getElementById('openModalTop'), document.getElementById('openModalHero'), document.getElementById('openModalBottom')].filter(Boolean);
+    const closeButtons = [document.getElementById('closeModal'), document.getElementById('closeBottom')].filter(Boolean);
+
+    function openModal(){
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      // Fookus vormi esimesele väljale
+      setTimeout(()=>{ const f=document.getElementById('name'); if(f) f.focus(); }, 60);
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    }
+
+    openButtons.forEach(btn => btn.addEventListener('click', openModal));
+    closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
+
+    // Sulge ESC-ga ja klõps taustal
+    modal.addEventListener('click', function(ev){
+      if(ev.target === modal){ closeModal(); }
+    });
+    document.addEventListener('keydown', function(ev){
+      if(ev.key === 'Escape' && modal.classList.contains('show')){ closeModal(); }
+    });
+
+    // ---- Vorm ja toast
+    (function(){
+      const form = document.getElementById('contactForm');
+      const toast = document.getElementById('toast');
+
+      function showToast(msg){
+        toast.textContent = msg || 'Aitäh! Teie sõnum on teele pandud.';
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'), 3000);
+      }
+
+      form.addEventListener('submit', function(ev){
+        ev.preventDefault();
+
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const message = form.message.value.trim();
+        const consent = document.getElementById('consent').checked;
+
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        if(!name){ showToast('Palun lisage nimi.'); return; }
+        if(!emailOk){ showToast('Palun kontrollige e-posti aadressi.'); return; }
+        if(!message){ showToast('Palun kirjeldage lühidalt projekti.'); return; }
+        if(!consent){ showToast('Palun kinnitage nõusolek andmete kasutamiseks.'); return; }
+
+        form.reset();
+        closeModal();
+        showToast('Aitäh! Võtame teiega peagi ühendust e-posti teel.');
+      });
+    })();
+  </script>
+</body>
+</html>
